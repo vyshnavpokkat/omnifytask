@@ -12,13 +12,6 @@ export const MobileNavbar: React.FC = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [timezoneVisible, setTimezoneVisible] = useState(true);
 
-    useEffect(() => {
-        AOS.init({
-            duration: 800,
-            once: false,
-        });
-    }, []);
-
     const handleSetActiveState = (value: string) => {
         setActiveState((prevActiveState) => ({
             ...prevActiveState,
@@ -186,7 +179,7 @@ export const MobileNavbar: React.FC = () => {
             </header>
             <div
                 className={`fixed top-0 left-0 right-0 h-full bg-primary z-40 transition-all duration-500 transform ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} sm:hidden`}
-                data-aos="fade-down"
+                data-aos={`${isMobileMenuOpen} && fade-down`}
             >
                 <div className="w-full p-5">
                     <div className="flex items-center justify-center text-primary-text group py-5" data-aos="fade-down">
