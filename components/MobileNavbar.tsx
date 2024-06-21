@@ -127,7 +127,8 @@ export const MobileNavbar: React.FC = () => {
             <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-transparent px-4 py-2 sm:hidden">
                 {renderLogo()}
             </header>
-            <div className={`fixed top-0 left-0 right-0 h-full bg-primary z-40 transition-all duration-300 transform ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} sm:hidden`}>
+            <div className={`fixed top-0 left-0 right-0 h-full bg-primary z-40 transition-all duration-500 transform ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} sm:hidden`}
+                >
                 <div className="w-full p-5">
                     <div className="flex items-center justify-center text-primary-text group py-5">
                         <Image width={20} height={20} src='assets/ic_logo.svg' className="flex-shrink-0 w-7 h-7 cursor-pointer" alt="FlowBite Logo" />

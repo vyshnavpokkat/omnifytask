@@ -174,10 +174,19 @@ export const FilterModal: React.FC = () => {
 
     const handleFilterChange = (data: string) => {
         setSelectedFilter(data);
+
+        setScheduleDates({ startDate: null, endDate: null });
+        setNameSearchParam('');
+        setServiceParam('');
+        setTagParam({ serviceType: 'all', serviceStatus: 'all' });
+        setFilterButtonData("All Waitlist")
     };
 
     const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedRadio(event.target.value);
+
+        setServiceParam('');
+        setTagParam({ serviceType: 'all', serviceStatus: 'all' });
     };
 
     const filteredNameData = tableData.filter(item =>
@@ -272,17 +281,19 @@ export const FilterModal: React.FC = () => {
 
                 <div>
                     <p className='text-xs mb-1 text-gray-300'>Showing {filteredNameData.length} results matching {nameSearchParam}</p>
-                    {filteredNameData.map((item) => (
-                        <div className='flex items-center' key={item.id}>
-                            <input
-                                type='checkbox'
-                                checked={selectedName === item.player}
-                                onChange={() => handleNameCheckboxChange(item.player)}
-                                className="mr-2"
-                            />
-                            <p className='text-sm text-primary-text'>{item.player}</p>
-                        </div>
-                    ))}
+                    <div className='max-h-40 overflow-auto'>
+                        {filteredNameData.map((item) => (
+                            <div className='flex items-center ' key={item.id}>
+                                <input
+                                    type='checkbox'
+                                    checked={selectedName === item.player}
+                                    onChange={() => handleNameCheckboxChange(item.player)}
+                                    className="mr-2"
+                                />
+                                <p className='text-sm text-primary-text'>{item.player}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

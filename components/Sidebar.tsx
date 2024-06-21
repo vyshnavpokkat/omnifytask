@@ -48,7 +48,7 @@ export const Sidebar: React.FC = () => {
 
     const renderLocation = () => (
         <div
-            className={`flex ${!activeWindowState.collapse ? 'justify-between' : 'justify-center'} p-2 text-gray-900 rounded-lg bg-white shadow-sm cursor-pointer`}
+            className={`flex ${!activeWindowState.collapse ? 'justify-between slide-in' : 'justify-center'} p-2 text-gray-900 rounded-lg bg-white shadow-sm cursor-pointer`}
             onClick={() => isTimezoneVisible(!timezoneVisible)}>
             {!activeWindowState.collapse &&
                 <span className="ml-3 text-primary-text font-semibold transition duration-75">Bengaluru, KA</span>}
@@ -63,7 +63,7 @@ export const Sidebar: React.FC = () => {
                     <b>8:30 AM</b><span>Tue 20 Jan</span>
                 </label>
             )}
-            <div className='flex justify-center items-center bg-dark-box transition-all duration-300 ease-in-out'>
+            <div className='flex justify-center items-center bg-dark-box'>
                 <Image width={20} height={20} src='assets/ic_time_zone.svg' className={`w-5 h-5 ${activeWindowState.collapse ? 'mx-auto' : 'ml-2.5'}`} alt="Time Zone Icon" />
                 {!activeWindowState.collapse && (
                     <select id="countries" className="text-md font-semibold text-primary-text p-2.5 bg-transparent outline-none pl-0">
@@ -151,11 +151,14 @@ export const Sidebar: React.FC = () => {
                 ${activeWindowState.collapse ? 'w-20' : 'w-64'}`}
             aria-label="Sidebar"
         >
+
             <div className="h-full px-3 py-4 overflow-y-auto">
                 {renderLogo()}
-                {renderLocation()}
-                {timezoneVisible && renderTimezoneForm()}
-                {renderSidebarItems()}
+                <div data-aos="zoom-in-up">
+                    {renderLocation()}
+                    {timezoneVisible && renderTimezoneForm()}
+                    {renderSidebarItems()}
+                </div>
                 {renderFooter()}
             </div>
         </aside>

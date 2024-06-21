@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { tableRowCount } from '@/state/atoms';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { dataCount, tableRowCount } from '@/state/atoms';
+import { combinedFilter } from '@/state/selectors';
 
 interface PaginationProps {
     currentPage: number;
@@ -11,7 +12,19 @@ interface PaginationProps {
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const isFirstPage = currentPage === 1;
     const isLastPage = currentPage === totalPages;
-    const [itemsPerPage,setItemsPerPage]=useRecoilState(tableRowCount)
+    const [itemsPerPage, setItemsPerPage] = useRecoilState(tableRowCount)
+    // const [dataCounts]=useRecoilState(dataCount)
+    const [dataCounts, setDataCount] = useRecoilState(dataCount)
+    const filteredData = useRecoilValue(combinedFilter);
+
+
+    filteredData.length > 15 ? 15: filteredData.length
+    useEffect(() => {
+        onPageChange(1)
+        setItemsPerPage( filteredData.length > 15 ? 15: filteredData.length)
+    }, [filteredData])
+
+
 
     // Function to handle previous page button click
     const handlePreviousPage = () => {
@@ -48,7 +61,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 onChange={handleInputChange}
                 required
             />
-            <span> Out of </span><span className='font-semibold'>{150}</span>
+            <span> Out of </span><span className='font-semibold'>{dataCounts.allWaitlist}</span>
         </div>
     );
 

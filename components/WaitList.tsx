@@ -38,7 +38,8 @@ export const Waitlist: React.FC = () => {
 
     // Render table content based on current items
     const renderTableContent = () => (
-        <div className='px-2'>
+        
+        <div className='px-2 bg-white' data-aos="fade-up" data-aos-anchor-placement="top-bottom">
             <div className="relative overflow-auto w-full mx-auto bg-white border rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">

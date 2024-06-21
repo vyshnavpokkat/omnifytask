@@ -1,22 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FilterModal } from './FilterModal';
 import { EditColumnModal } from './EditColumnModal';
-import { useRecoilState } from 'recoil';
-import { clientSearchParam, dataCount, filterByButton, filterTableData, scheduleDateState, serviceSearchParam, tagSearchParam } from '@/state/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { clientSearchParam, dataCount, filterByButton, scheduleDateState, serviceSearchParam, tagSearchParam } from '@/state/atoms';
 import Image from 'next/image';
 
 
 export const Filters: React.FC = () => {
-    const [tableData, setTableData] = useRecoilState(filterTableData);
-    const [allWaitlist, setAllWaitList] = useState(tableData);
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    // const [nameSearchParam, setNameSearchParam] = useRecoilState(clientSearchParam);
     const [scheduleDates, setScheduleDates] = useRecoilState(scheduleDateState);
     const [nameSearchParam, setNameSearchParam] = useRecoilState(clientSearchParam);
     const [serviceParam, setServiceParam] = useRecoilState(serviceSearchParam);
     const [tagParam, setTagParam] = useRecoilState(tagSearchParam);
     const [filterButtonData, setFilterButtonData] = useRecoilState(filterByButton);
-    const [dataCounts]=useRecoilState(dataCount)
+    const [dataCounts] = useRecoilState(dataCount)
 
     const resetFilters = () => {
         setScheduleDates({ startDate: null, endDate: null });
@@ -26,9 +22,11 @@ export const Filters: React.FC = () => {
         setFilterButtonData("All Waitlist")
     };
 
+
+
     const handleNameFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setNameSearchParam(value); // Update Recoil state with trimmed value
+        setNameSearchParam(value);
     };
 
     const handleButtonFilters = (label: string) => {
@@ -58,14 +56,16 @@ export const Filters: React.FC = () => {
                     placeholder="Search client"
                     required
                     onChange={handleNameFilter}
-                    value={nameSearchParam} // Bind the input value to Recoil state
+                    value={nameSearchParam}
                 />
             </div>
         </div>
     );
 
     return (
-        <div className='bg-white sticky top-0 z-10 p-3 border-t-12 border-primary'>
+        <div className='bg-white sticky top-0 z-10 p-3 border-t-12 border-primary '
+            data-aos="fade-up"
+            data-aos-anchor-placement="top-bottom">
             <h4 className="ml-5 text-xl sm:text-2xl md:text-3xl font-bold leading-none tracking-tight text-primary-text">Waitlist</h4>
             <div className="inline-flex flex-row w-full gap-2 mt-3 mb-2 text-center">
                 {renderFilterItem('All Waitlist', dataCounts.allWaitlist)}

@@ -16,7 +16,7 @@ export const combinedFilter = selector({
     switch (buttonFilter) {
       case "Newly Added":
         // Sort by createdOn date in descending order and take the latest 10 entries
-        data = [...data].sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime()).slice(0, 15);
+        data = [...data].sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime()).slice(0, 10);
         break;
       case "Leads":
         data = data.filter(item => item.status === "lead");

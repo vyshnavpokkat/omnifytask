@@ -14,8 +14,8 @@ interface TableDataType {
   playerPhone: string;
   services: string;
   scheduled: string;
-  serviceType:string;
-  serviceStatus:string;
+  serviceType: string;
+  serviceStatus: string;
 
 }[];
 
@@ -29,10 +29,11 @@ interface tagSearchParam {
   serviceStatus: string;
 }
 
-interface dataCount{
+interface dataCount {
   allWaitlist: number;
-  newlyAdded:number;
-  leads:number
+  newlyAdded: number;
+  leads: number;
+  currentPage:number;
 }
 
 const leadCount = dummyData.filter(item => item.status === 'lead').length;
@@ -52,7 +53,7 @@ export const filterTableData = atom<TableDataType[]>({
 
 export const tableRowCount = atom<number>({
   key: 'tableRowCount',
-  default: 20,
+  default: dummyData.length <= 15 ? dummyData.length : 15,
 })
 
 export const tableColFilter = atom<string[]>({
@@ -87,12 +88,12 @@ export const tagSearchParam = atom<tagSearchParam>({
 })
 
 export const filterByButton = atom<string>({
-  key :'filterByButton',
-  default :"All Waitlist"
+  key: 'filterByButton',
+  default: "All Waitlist"
 })
 
 export const applyFilter = atom<boolean>({
-  key : 'applyFilter',
+  key: 'applyFilter',
   default: true
 })
 
@@ -100,7 +101,8 @@ export const dataCount = atom<dataCount>({
   key: 'dataCount',
   default: {
     allWaitlist: dummyData.length,
-    newlyAdded: 15,
-    leads:leadCount
+    newlyAdded: 10,
+    leads: leadCount,
+    currentPage:1
   },
 })
