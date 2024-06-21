@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { dataCount, tableRowCount } from '@/state/atoms';
-import { combinedFilter } from '@/state/selectors';
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import { tableRowCount } from '@/state/atoms';
 
 interface PaginationProps {
     currentPage: number;
@@ -12,19 +11,7 @@ interface PaginationProps {
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const isFirstPage = currentPage === 1;
     const isLastPage = currentPage === totalPages;
-    const [itemsPerPage, setItemsPerPage] = useRecoilState(tableRowCount)
-    // const [dataCounts]=useRecoilState(dataCount)
-    const [dataCounts, setDataCount] = useRecoilState(dataCount)
-    const filteredData = useRecoilValue(combinedFilter);
-
-
-    filteredData.length > 15 ? 15: filteredData.length
-    useEffect(() => {
-        onPageChange(1)
-        setItemsPerPage( filteredData.length > 15 ? 15: filteredData.length)
-    }, [filteredData])
-
-
+    const [itemsPerPage, setItemsPerPage] = useRecoilState(tableRowCount);
 
     // Function to handle previous page button click
     const handlePreviousPage = () => {
@@ -50,7 +37,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
 
     // Render page count section
     const renderPageCount = () => (
-        <div className=" gap-1 items-center hidden md:block">
+        <div className="gap-1 items-center hidden md:block">
             <span>Displaying </span>
             <input
                 type="number"
@@ -61,53 +48,57 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 onChange={handleInputChange}
                 required
             />
-            <span> Out of </span><span className='font-semibold'>{dataCounts.allWaitlist}</span>
+            <span> Out of </span><span className='font-semibold'>{150}</span>
         </div>
     );
 
     // Render pagination buttons
-    const renderPaginationButtons = () => (
-        <ul className="flex flex-wrap items-center content-center text-sm font-medium text-gray-500 sm:mt-0 ">
-            <nav aria-label="Page navigation example">
-                <ul className="inline-flex -space-x-px text-sm">
-                    <li>
-                        <button
-                            onClick={handlePreviousPage}
-                            className={`flex items-center justify-center px-3 h-8 ${isFirstPage ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                                } bg-white  rounded-s-lg focus:outline-none`}
-                            disabled={isFirstPage}
-                        >
-                            Previous
-                        </button>
-                    </li>
-                    {[...Array(totalPages)].map((_, index) => (
-                        <li key={index + 1}>
+    const renderPaginationButtons = () => {
+        if (!totalPages || totalPages < 1) return null; // Handle invalid totalPages
+
+        return (
+            <ul className="flex flex-wrap items-center content-center text-sm font-medium text-gray-500 sm:mt-0">
+                <nav aria-label="Page navigation example">
+                    <ul className="inline-flex -space-x-px text-sm">
+                        <li>
                             <button
-                                onClick={() => onPageChange(index + 1)}
-                                className={`flex items-center justify-center px-3 mr-1 h-8 ${currentPage === index + 1 ? ' border' : 'text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700'
-                                    } rounded focus:outline-none`}
+                                onClick={handlePreviousPage}
+                                className={`flex items-center justify-center px-3 h-8 ${isFirstPage ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                                    } bg-white  rounded-s-lg focus:outline-none`}
+                                disabled={isFirstPage}
                             >
-                                {index + 1}
+                                Previous
                             </button>
                         </li>
-                    ))}
-                    <li>
-                        <button
-                            onClick={handleNextPage}
-                            className={`flex items-center justify-center px-3 h-8 ${isLastPage ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                                } bg-white rounded-e-lg focus:outline-none`}
-                            disabled={isLastPage}
-                        >
-                            Next
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-        </ul>
-    );
+                        {[...Array(totalPages)].map((_, index) => (
+                            <li key={index + 1}>
+                                <button
+                                    onClick={() => onPageChange(index + 1)}
+                                    className={`flex items-center justify-center px-3 mr-1 h-8 ${currentPage === index + 1 ? 'border' : 'text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700'
+                                        } rounded focus:outline-none`}
+                                >
+                                    {index + 1}
+                                </button>
+                            </li>
+                        ))}
+                        <li>
+                            <button
+                                onClick={handleNextPage}
+                                className={`flex items-center justify-center px-3 h-8 ${isLastPage ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                                    } bg-white rounded-e-lg focus:outline-none`}
+                                disabled={isLastPage}
+                            >
+                                Next
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </ul>
+        );
+    };
 
     return (
-        <footer className="w-full sticky bottom-0 bg-white border-y-12 sm:border-t-0 border-primary flex items-end justify-end md:items-center md:justify-between md:p-4 ">
+        <footer className="w-full sticky bottom-0 bg-white border-y-12 sm:border-t-0 border-primary flex items-end justify-end md:items-center md:justify-between md:p-4">
             {renderPageCount()}
             {renderPaginationButtons()}
         </footer>

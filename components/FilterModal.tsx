@@ -282,8 +282,8 @@ export const FilterModal: React.FC = () => {
                 <div>
                     <p className='text-xs mb-1 text-gray-300'>Showing {filteredNameData.length} results matching {nameSearchParam}</p>
                     <div className='max-h-40 overflow-auto'>
-                        {filteredNameData.map((item) => (
-                            <div className='flex items-center ' key={item.id}>
+                        {filteredNameData && filteredNameData.map((item) => (
+                            <div className='flex items-center' key={item.id}>
                                 <input
                                     type='checkbox'
                                     checked={selectedName === item.player}
