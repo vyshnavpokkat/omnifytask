@@ -1,5 +1,7 @@
 # Dashboard Design with Next.js, Recoil, AOS, and Tailwind CSS
 
+![screenshot](screenshot.png)
+
 ## Overview
 
 This project implements a responsive dashboard interface using modern web technologies. It leverages Next.js for server-side rendering, Recoil for state management, AOS (Animate On Scroll) for animations, and Tailwind CSS for styling. The dashboard is designed to provide a user-friendly interface for managing various aspects of an application, including orders, subscriptions, calendar events, and a waitlist.
