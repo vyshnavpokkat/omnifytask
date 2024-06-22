@@ -291,6 +291,7 @@ export const FilterModal: React.FC = () => {
                                     className="mr-2"
                                 />
                                 <p className='text-sm text-primary-text'>{item.player}</p>
+                                <span className='text-xs bg-primary rounded-lg p-1 ml-3 text-opacity-50'>{item.serviceType}</span>
                             </div>
                         ))}
                     </div>
@@ -362,6 +363,8 @@ export const FilterModal: React.FC = () => {
                                 className="mr-2"
                             />
                             <p className='text-sm text-primary-text'>{item.services}</p>
+                            <span className='text-xs bg-primary rounded p-1 ml-3 text-opacity-50'>{item.serviceType}</span>
+                            <span className={`text-xs bg-primary rounded p-1 ml-3 text-opacity-50 ${item.serviceStatus === 'public' && 'text-green-500'} ${item.serviceStatus === 'private' && 'text-orange-500'}`}>{item.serviceStatus}</span>
                         </div>
                     ))}
                 </div>
